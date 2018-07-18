@@ -14,12 +14,15 @@ namespace HumaneSociety
 
         public static Room GetRoom(int animalID)
         {
-
+            var roomResult = (from room in context.Rooms
+                              where room.AnimalId == animalID
+                              select room).First();
+            return roomResult;
         }
-
-        public static Adoption GetPendingAdoptions()
+        public static IQueryable<Adoption> GetPendingAdoptions()
         {
-
+            var pendingAdoptions = from adoption in context.Adoptions where adoption.ApprovalStatus == "pending" select adoption;
+            return pendingAdoptions;
         }
         public static void UpdateAdoption(bool someBool, Adoption adoption)
         {
@@ -234,6 +237,6 @@ namespace HumaneSociety
             }
 
         }
-    
+
     }
 }
