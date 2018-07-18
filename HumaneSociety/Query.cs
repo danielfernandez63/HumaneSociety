@@ -12,18 +12,11 @@ namespace HumaneSociety
     {
         public static HumaneSocietyDataContext context = new HumaneSocietyDataContext();
 
-        public static Room GetRoom(int animalID)
-        {
-            var roomResult = (from room in context.Rooms
-                              where room.AnimalId == animalID
-                              select room).First();
-            return roomResult;
-        }
-        public static IQueryable<Adoption> GetPendingAdoptions()
-        {
-            var pendingAdoptions = from adoption in context.Adoptions where adoption.ApprovalStatus == "pending" select adoption;
-            return pendingAdoptions;
-        }
+
+
+
+
+
         public static void UpdateAdoption(bool someBool, Adoption adoption)
         {
 
@@ -40,10 +33,7 @@ namespace HumaneSociety
         {
 
         }
-        public static void RemoveAnimal(Animal animal)
-        {
 
-        }
         public static Species GetSpecies()
         {
 
@@ -52,10 +42,7 @@ namespace HumaneSociety
         {
 
         }
-        public static void AddAnimal(Animal animal)
-        {
-
-        }
+      
         public static Employee EmployeeLogin(string userName, string password)
         {
             
@@ -63,15 +50,8 @@ namespace HumaneSociety
         public static Employee RetrieveEmployeeUser(string email, int employeeNumber)
         {
 
-        }
-        public static void AddUsernameAndPassword(Employee employee)
-        {
-
-        }
-        public static bool CheckEmployeeUsernameExist(string username)
-        {
-            return false;
-        }
+        }  
+      
         public static Client GetClient(string userName, string password)
         {
 
@@ -96,11 +76,6 @@ namespace HumaneSociety
         {
 
         }
-        public static void AddNewClient(string firstName, string lastName, string username, string password, string email, string streetAddress, int zipCode, int state)
-        {
-
-        }
-
         public static void RunEmployeeQueries(Employee employee, string message)
         {
 
@@ -108,6 +83,70 @@ namespace HumaneSociety
 
 
 
+
+
+
+
+        public static void RemoveAnimal(Animal animal)
+        {
+
+        }
+
+        public static void AddAnimal(Animal animal)
+        {
+
+        }
+
+        public static bool CheckEmployeeUsernameExist(string username)
+        {
+            return false;
+        }
+
+        public static void AddUsernameAndPassword(Employee employee)
+        {
+
+        }
+
+        public static void AddNewClient(string firstName, string lastName, string username, string password, string email, string streetAddress, int zipCode, int state)
+        {         
+                Client newclient = new Client();
+                Address newaddress = new Address();
+                {
+                    newclient.FirstName = firstName;
+                    newclient.LastName = lastName;
+                    newclient.UserName = username;
+                    newclient.Password = password;
+                    newclient.Email = email;
+                    newaddress.AddressLine1 = streetAddress;
+                    newaddress.Zipcode = zipCode;
+                    newaddress.USStateId = state;
+                    newclient.AddressId = newaddress.AddressId;        
+                }
+
+            try
+            {
+                context.Clients.InsertOnSubmit(newclient);
+                context.SubmitChanges();
+            }
+            catch
+            {
+
+            }
+
+        }
+
+        public static Room GetRoom(int animalID)
+        {
+            var roomResult = (from room in context.Rooms
+                              where room.AnimalId == animalID
+                              select room).First();
+            return roomResult;
+        }
+        public static IQueryable<Adoption> GetPendingAdoptions()
+        {
+            var pendingAdoptions = from adoption in context.Adoptions where adoption.ApprovalStatus == "pending" select adoption;
+            return pendingAdoptions;
+        }
 
         // public static void UpdateClient(Client client)            didnt use after splitting them up
         //  {
