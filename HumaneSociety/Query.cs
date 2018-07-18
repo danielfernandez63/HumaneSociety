@@ -8,11 +8,14 @@ namespace HumaneSociety
 {
     public static class Query
     {
+        public static HumaneSocietyDataContext context = new HumaneSocietyDataContext();
         public static Room GetRoom(int animalID)
         {
-
+            var roomResult = (from room in context.Rooms
+                              where room.AnimalId == animalID
+                              select room).First();
+            return roomResult;
         }
-
         public static Adoption GetPendingAdoptions()
         {
 
@@ -121,6 +124,5 @@ namespace HumaneSociety
         {
 
         }
-
     }
 }
