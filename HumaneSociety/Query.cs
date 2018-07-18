@@ -12,11 +12,6 @@ namespace HumaneSociety
     {
         public static HumaneSocietyDataContext context = new HumaneSocietyDataContext();
 
-
-
-
-
-
         public static void UpdateAdoption(bool someBool, Adoption adoption)
         {
 
