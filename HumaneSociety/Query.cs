@@ -8,12 +8,12 @@ namespace HumaneSociety
 {
     public static class Query
     {
-        public static void GetRoom(Animal AnimalId)
+        public static Room GetRoom(int animalID)
         {
 
         }
 
-        public static void GetPendingAdoptions()
+        public static Adoption GetPendingAdoptions()
         {
 
         }
@@ -21,7 +21,7 @@ namespace HumaneSociety
         {
 
         }
-        public static void GetShots(Animal animal)
+        public static AnimalShot GetShots(Animal animal)
         {
 
         }
@@ -29,7 +29,7 @@ namespace HumaneSociety
         {
 
         }
-        public static void EnterUpdate(Animal animal)
+        public static void EnterUpdate(Animal animal, Dictionary<int, string> updates)
         {
 
         }
@@ -37,11 +37,11 @@ namespace HumaneSociety
         {
 
         }
-        public static void GetSpecies()
+        public static Species GetSpecies()
         {
 
         }
-        public static void GetDietPlan()
+        public static DietPlan GetDietPlan()
         {
 
         }
@@ -49,11 +49,11 @@ namespace HumaneSociety
         {
 
         }
-        public static void EmployeeLogin()
+        public static Employee EmployeeLogin(string userName, string password)
         {
-
+            
         }
-        public static void RetrieveEmployeeUser()
+        public static Employee RetrieveEmployeeUser(string email, int employeeNumber)
         {
 
         }
@@ -65,15 +65,15 @@ namespace HumaneSociety
         {
             return false;
         }
-        public static void GetClient()
+        public static Client GetClient(string userName, string password)
         {
 
         }
-        public static void GetUserAdoptionStatus(Client client)
+        public static int GetUserAdoptionStatus(Client client)
         {
 
         }
-        public static void GetAnimalByID(int ID)
+        public static Animal GetAnimalByID(int ID)
         {
 
         }
@@ -81,15 +81,15 @@ namespace HumaneSociety
         {
 
         }
-        public static void RetrieveClients()
+        public static Client RetrieveClients()
         {
 
         }
-        public static void GetStates()
+        public static USState GetStates()
         {
 
         }
-        public static void AddNewClient()
+        public static void AddNewClient(string firstName, string lastName, string username, string password, string email, string streetAddress, int zipCode, int state)
         {
 
         }
