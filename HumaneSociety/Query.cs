@@ -17,7 +17,7 @@ namespace HumaneSociety
         {
 
         }
-        public static void UpdateAdoption(Adoption adoption)
+        public static void UpdateAdoption(bool someBool, Adoption adoption)
         {
 
         }
@@ -25,7 +25,7 @@ namespace HumaneSociety
         {
 
         }
-        public static void UpdateShot(Animal animal)
+        public static void UpdateShot(string shot, Animal animal)
         {
 
         }
@@ -61,9 +61,9 @@ namespace HumaneSociety
         {
 
         }
-        public static void CheckEmployeeUsernameExist()
+        public static bool CheckEmployeeUsernameExist(string username)
         {
-
+            return false;
         }
         public static void GetClient()
         {
@@ -73,7 +73,7 @@ namespace HumaneSociety
         {
 
         }
-        public static void GetAnimalByID()
+        public static void GetAnimalByID(int ID)
         {
 
         }
@@ -117,7 +117,7 @@ namespace HumaneSociety
         {
 
         }
-        public static void RunEmployeeQueries() //pass in employee?
+        public static void RunEmployeeQueries(Employee employee, string message) //pass in employee?
         {
 
         }
