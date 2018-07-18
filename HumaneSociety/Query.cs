@@ -24,9 +24,9 @@ namespace HumaneSociety
             var pendingAdoptions = from adoption in context.Adoptions where adoption.ApprovalStatus == "pending" select adoption;
             return pendingAdoptions;
         }
-        public static void UpdateAdoption(bool someBool, Adoption adoption)
+        public static void UpdateAdoption(bool willApprove, Adoption adoption)
         {
-
+            var updatedAdoption = willApprove == true ? adoption.ApprovalStatus = "Approved" : adoption.ApprovalStatus = "Denied";
         }
         public static AnimalShot GetShots(Animal animal)
         {
