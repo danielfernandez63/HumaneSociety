@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace HumaneSociety
 {
+    
+
     public static class Query
     {
+        public static HumaneSocietyDataContext context = new HumaneSocietyDataContext();
+
         public static Room GetRoom(int animalID)
         {
 
@@ -93,34 +97,143 @@ namespace HumaneSociety
         {
 
         }
-        public static void UpdateClient(Client client)
+
+        public static void RunEmployeeQueries(Employee employee, string message)
         {
 
         }
+
+
+
+
+        // public static void UpdateClient(Client client)            didnt use after splitting them up
+        //  {
+
+        //  }
+
+        public static void UpdatePassword(Client client)
+        {
+            try
+            {
+                Client person = (from n in context.Clients where n.ClientId.Equals(client.ClientId) select n).First();
+                person.Password = client.Password;
+                context.SubmitChanges();
+            }
+            catch
+            {
+
+            }
+        }
+
+        public static void UpdateIncome(Client client)
+        {
+            try
+            {
+                Client person = (from n in context.Clients where n.ClientId.Equals(client.ClientId) select n).First();
+                person.Income = client.Income;
+                context.SubmitChanges();
+            }
+            catch
+            {
+
+            }
+        }
+
+        public static void UpdateKids(Client client)
+        {
+            try
+            {
+                Client person = (from n in context.Clients where n.ClientId.Equals(client.ClientId) select n).First();
+                person.NumberOfKids = client.NumberOfKids;
+                context.SubmitChanges();
+            }
+            catch
+            {
+
+            }
+        }
+
+        public static void UpdateHomeSize(Client client)
+        {
+            try
+            {
+                Client person = (from n in context.Clients where n.ClientId.Equals(client.ClientId) select n).First();
+                person.HomeSquareFootage = client.HomeSquareFootage;
+                context.SubmitChanges();
+            }
+            catch
+            {
+
+            }
+        }
+
         public static void UpdateUsername(Client client)
         {
+            try
+            {
+                Client person = (from n in context.Clients where n.ClientId.Equals(client.ClientId) select n).First();
+                person.UserName = client.UserName;
+                context.SubmitChanges();
+            }
+            catch
+            {
 
+            }
         }
         public static void UpdateEmail(Client client)
         {
+            try
+            {
+                Client person = (from n in context.Clients where n.ClientId.Equals(client.ClientId) select n).First();
+                person.Email = client.Email;
+                context.SubmitChanges();
+            }
+            catch
+            {
 
+            }
         }
         public static void UpdateAddress(Client client)
         {
+            try
+            {
+                Client person = (from n in context.Clients where n.ClientId.Equals(client.ClientId) select n).First();
+                person.Address = client.Address;
+                context.SubmitChanges();
+            }
+            catch
+            {
 
+            }
         }
         public static void UpdateFirstName(Client client)
         {
+            try
+            {
+                Client person = (from n in context.Clients where n.ClientId.Equals(client.ClientId) select n).First();
+                person.FirstName = client.FirstName;
+                context.SubmitChanges();             
+            }
+            catch
+            {
+
+            }
 
         }
         public static void UpdateLastName(Client client)
         {
+            try
+            {
+                Client person = (from n in context.Clients where n.ClientId.Equals(client.ClientId) select n).First();
+                person.LastName = client.LastName;
+                context.SubmitChanges();
+            }
+            catch
+            {
+
+            }
 
         }
-        public static void RunEmployeeQueries(Employee employee, string message) //pass in employee?
-        {
-
-        }
-
+    
     }
 }
