@@ -201,7 +201,7 @@ namespace HumaneSociety
             Adoption newAdoption = new Adoption();
             newAdoption.ClientId = client.ClientId;
             newAdoption.AnimalId = animal.AnimalId;
-            newAdoption.AdoptionFee = 75;
+            newAdoption.AdoptionFee = 200;            
             context.Adoptions.InsertOnSubmit(newAdoption);
             context.SubmitChanges();
         }
@@ -288,7 +288,7 @@ namespace HumaneSociety
 
         public static void UpdateAdoption(bool willApprove, Adoption adoption)
         {
-            var updatedAdoption = willApprove == true ? adoption.ApprovalStatus = "Approved" : adoption.ApprovalStatus = "Denied";
+            var updatedAdoption = willApprove == true ? adoption.ApprovalStatus = "Adopted" : adoption.ApprovalStatus = "Adoption Denied";
             context.SubmitChanges();
         }
 

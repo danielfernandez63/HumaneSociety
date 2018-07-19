@@ -9,6 +9,20 @@ namespace HumaneSociety
     class UserEmployee : User
     {
         Employee employee;
+        double humaneSocietyBankAccount = 0;
+
+        public double HumaneSocietyBankAccount
+        {
+            get
+            {
+                return humaneSocietyBankAccount;
+            }
+            set
+            {
+                humaneSocietyBankAccount = value;
+            }
+        }
+
         
         public override void LogIn()
         {
@@ -87,13 +101,14 @@ namespace HumaneSociety
             if ((bool)UserInterface.GetBitData())
             {
                 Query.UpdateAdoption(true, adoption);
+                HumaneSocietyBankAccount += 200;
             }
             else
             {
                 Query.UpdateAdoption(false, adoption);
             }
         }
-
+        
         private void CheckAnimalStatus()
         {
             Console.Clear();
