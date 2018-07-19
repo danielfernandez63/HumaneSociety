@@ -318,7 +318,7 @@ namespace HumaneSociety
         {
             Console.Clear();
             string username = UserInterface.GetStringData("username", "your");
-            if (Query.CheckEmployeeUsernameExist(username))
+            if (Query.CheckEmployeeUsernameExist(username) is true)
             {
                 UserInterface.DisplayUserOptions("Username already in use please try another username.");
                 GetUserName();
