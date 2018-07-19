@@ -12,35 +12,7 @@ namespace HumaneSociety
     {
         public static HumaneSocietyDataContext context = new HumaneSocietyDataContext();
 
-        public static void UpdateAdoption(bool someBool, Adoption adoption)
-        {
 
-        }
-
-        public static Room GetRoom(int animalID)
-        {
-            var roomResult = (from room in context.Rooms
-                              where room.AnimalId == animalID
-                              select room).First();
-            return roomResult;
-        }
-        public static IQueryable<Adoption> GetPendingAdoptions()
-        {
-            var pendingAdoptions = from adoption in context.Adoptions where adoption.ApprovalStatus == "pending" select adoption;
-            return pendingAdoptions;
-        }
-        public static void UpdateAdoption(bool willApprove, Adoption adoption)
-        {
-            var updatedAdoption = willApprove == true ? adoption.ApprovalStatus = "Approved" : adoption.ApprovalStatus = "Denied";
-        }
-        public static AnimalShot GetShots(Animal animal)
-        {
-
-        }
-        public static void UpdateShot(string shot, Animal animal)
-        {
-
-        }
         public static void EnterUpdate(Animal animal, Dictionary<int, string> updates)
         {
 
@@ -145,6 +117,28 @@ namespace HumaneSociety
 
             }
 
+        }
+        public static IQueryable<AnimalShot> GetShots(Animal animal)
+        {
+            var animalShots = from shots in context.AnimalShots
+                              where shots.AnimalId == animal.AnimalId
+                              select shots;
+            return animalShots;
+        }
+        public static void UpdateShot(string shot, Animal animal)
+        {
+            AnimalShot newShot = new AnimalShot();
+            newShot.AnimalId = animal.AnimalId;
+            newShot.DateReceived = DateTime.Now;
+            context.AnimalShots.InsertOnSubmit(newShot);
+            context.SubmitChanges();
+
+        }
+
+        public static void UpdateAdoption(bool willApprove, Adoption adoption)
+        {
+            var updatedAdoption = willApprove == true ? adoption.ApprovalStatus = "Approved" : adoption.ApprovalStatus = "Denied";
+            context.SubmitChanges();
         }
 
         public static Room GetRoom(int animalID)
