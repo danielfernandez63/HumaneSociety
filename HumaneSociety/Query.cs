@@ -17,15 +17,6 @@ namespace HumaneSociety
         {
 
         }
-
-        public static Species GetSpecies()
-        {
-
-        }
-        public static DietPlan GetDietPlan()
-        {
-
-        }
       
         public static Employee EmployeeLogin(string userName, string password)
         {
@@ -117,6 +108,18 @@ namespace HumaneSociety
 
             }
 
+        }
+        public static IQueryable<DietPlan> GetDietPlan()
+        {
+            var getDietPlans = from dietPlan in context.DietPlans
+                               select dietPlan;
+            return getDietPlans;
+        }
+        public static IQueryable<Species> GetSpecies()
+        {
+            var getSpecies = from species in context.Species
+                             select species;
+            return getSpecies;
         }
         public static IQueryable<AnimalShot> GetShots(Animal animal)
         {
