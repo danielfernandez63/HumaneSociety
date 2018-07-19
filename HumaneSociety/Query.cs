@@ -21,24 +21,20 @@ namespace HumaneSociety
         public static Employee RetrieveEmployeeUser(string email, int employeeNumber)
         {
 
-        }        
+        }    
 
 
-        public static Animal GetAnimalByID(int ID)
+        public static IQueryable<Client> RetrieveClients()
         {
-
+            var getClients = from clients in context.Clients
+                            select clients;
+            return getClients;
         }
-        public static void Adopt(Animal animal, Client client)
+        public static IQueryable<USState> GetStates()
         {
-
-        }
-        public static Client RetrieveClients()
-        {
-
-        }
-        public static USState GetStates()
-        {
-
+            var getStates = from states in context.USStates
+                               select states;
+            return getStates;
         }
         public static void RunEmployeeQueries(Employee employee, string message)
         {
@@ -90,6 +86,22 @@ namespace HumaneSociety
 
             }
 
+        }
+        public static void Adopt(Animal animal, Client client)
+        {
+            Adoption newAdoption = new Adoption();
+            newAdoption.ClientId = client.ClientId;
+            newAdoption.AnimalId = animal.AnimalId;
+            newAdoption.AdoptionFee = 75;
+            context.Adoptions.InsertOnSubmit(newAdoption);
+            context.SubmitChanges();
+        }
+        public static Animal GetAnimalByID(int ID)
+        {
+            var animalByID = (from animal in context.Animals
+                              where animal.AnimalId == ID
+                              select animal).First();
+            return animalByID;
         }
         public static IQueryable<Adoption> GetUserAdoptionStatus(Client client)
         {
