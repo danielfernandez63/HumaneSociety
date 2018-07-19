@@ -16,25 +16,14 @@ namespace HumaneSociety
         public static void EnterUpdate(Animal animal, Dictionary<int, string> updates)
         {
 
-        }
-      
-        public static Employee EmployeeLogin(string userName, string password)
-        {
-            
-        }
+        }      
+
         public static Employee RetrieveEmployeeUser(string email, int employeeNumber)
         {
 
-        }  
-      
-        public static Client GetClient(string userName, string password)
-        {
+        }        
 
-        }
-        public static int GetUserAdoptionStatus(Client client)
-        {
 
-        }
         public static Animal GetAnimalByID(int ID)
         {
 
@@ -55,13 +44,6 @@ namespace HumaneSociety
         {
 
         }
-
-
-
-
-
-
-
         public static void RemoveAnimal(Animal animal)
         {
 
@@ -108,6 +90,27 @@ namespace HumaneSociety
 
             }
 
+        }
+        public static IQueryable<Adoption> GetUserAdoptionStatus(Client client)
+        {
+            var adoptionStatus = from status in context.Adoptions
+                                 where status.ClientId == client.ClientId
+                                 select status;
+            return adoptionStatus;
+        }
+        public static Client GetClient(string userName, string password)
+        {
+            var existingClient = (from client in context.Clients
+                                  where client.UserName == userName && client.Password == password
+                                  select client).First();
+            return existingClient;
+        }
+        public static Employee EmployeeLogin(string userName, string password)
+        {
+            var existingEmployee = (from employee in context.Employees
+                                    where employee.UserName == userName && employee.Password == password
+                                    select employee).First();
+            return existingEmployee;
         }
         public static IQueryable<DietPlan> GetDietPlan()
         {
