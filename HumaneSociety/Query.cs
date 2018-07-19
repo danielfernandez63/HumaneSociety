@@ -12,44 +12,6 @@ namespace HumaneSociety
     {
         public static HumaneSocietyDataContext context = new HumaneSocietyDataContext();
 
-
-
-
-
-
-
-        public static void UpdateAdoption(bool someBool, Adoption adoption)
-        {
-
-        }
-
-        public static Room GetRoom(int animalID)
-        {
-            var roomResult = (from room in context.Rooms
-                              where room.AnimalId == animalID
-                              select room).First();
-            return roomResult;
-        }
-        public static IQueryable<Adoption> GetPendingAdoptions()
-        {
-            var pendingAdoptions = from adoption in context.Adoptions where adoption.ApprovalStatus == "pending" select adoption;
-            return pendingAdoptions;
-        }
-        public static void UpdateAdoption(bool willApprove, Adoption adoption)
-        {
-            var updatedAdoption = willApprove == true ? adoption.ApprovalStatus = "Approved" : adoption.ApprovalStatus = "Denied";
-        }
-
-
-        public static AnimalShot GetShots(Animal animal)
-        {
-
-        }
-        public static void UpdateShot(string shot, Animal animal)
-        {
-
-        }
-
         public static void EnterUpdate(Animal animal, Dictionary<int, string> updates)
         {
 
@@ -59,25 +21,6 @@ namespace HumaneSociety
         {
 
         }    
-
-
-        public static IQueryable<Client> RetrieveClients()
-        {
-            var getClients = from clients in context.Clients
-                            select clients;
-            return getClients;
-        }
-        public static IQueryable<USState> GetStates()
-        {
-            var getStates = from states in context.USStates
-                               select states;
-            return getStates;
-        }
-
-
-
-
-
 
         public static void RunEmployeeQueries(Employee employee, string message)
         {
@@ -110,11 +53,6 @@ namespace HumaneSociety
             }
         }
 
-
-        public static void RunEmployeeQueries(Employee employee, string message)
-        {
-
-        }
 
         public static void RemoveAnimal(Animal animal)
         {
@@ -202,6 +140,19 @@ namespace HumaneSociety
             }
 
         }
+
+        public static IQueryable<Client> RetrieveClients()
+        {
+            var getClients = from clients in context.Clients
+                             select clients;
+            return getClients;
+        }
+        public static IQueryable<USState> GetStates()
+        {
+            var getStates = from states in context.USStates
+                            select states;
+            return getStates;
+        }
         public static void Adopt(Animal animal, Client client)
         {
             Adoption newAdoption = new Adoption();
@@ -274,18 +225,18 @@ namespace HumaneSociety
             context.SubmitChanges();
         }
 
-        //public static Room GetRoom(int animalID)                      might have been copied
-        //{
-        //    var roomResult = (from room in context.Rooms
-        //                      where room.AnimalId == animalID
-        //                      select room).First();
-        //    return roomResult;
-        //}
-        //public static IQueryable<Adoption> GetPendingAdoptions()
-        //{
-        //    var pendingAdoptions = from adoption in context.Adoptions where adoption.ApprovalStatus == "pending" select adoption;
-        //    return pendingAdoptions;
-        //}
+        public static Room GetRoom(int animalID)
+        {
+            var roomResult = (from room in context.Rooms
+                              where room.AnimalId == animalID
+                              select room).First();
+            return roomResult;
+        }
+        public static IQueryable<Adoption> GetPendingAdoptions()
+        {
+            var pendingAdoptions = from adoption in context.Adoptions where adoption.ApprovalStatus == "pending" select adoption;
+            return pendingAdoptions;
+        }
 
         public static void UpdatePassword(Client client)
         {
