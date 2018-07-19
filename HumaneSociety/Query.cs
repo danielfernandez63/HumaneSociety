@@ -14,8 +14,41 @@ namespace HumaneSociety
 
         public static void EnterUpdate(Animal animal, Dictionary<int, string> updates)
         {
-
-        }      
+            foreach (KeyValuePair<int, string> element in updates)
+            {
+                var specifiedAnimal = (from animals in context.Animals
+                                       where animals.AnimalId == animal.AnimalId
+                                       select animals).First();
+                switch (element.Key)
+                {
+                    case 1:
+                        specifiedAnimal.Species.Name = element.Value;
+                        break;
+                    case 2:
+                        specifiedAnimal.Species.Name = element.Value;
+                        break;
+                    case 3:
+                        specifiedAnimal.Name = element.Value;
+                        break;
+                    case 4:
+                        specifiedAnimal.Age = int.Parse(element.Value);
+                        break;
+                    case 5:
+                        specifiedAnimal.Demeanor = element.Value;
+                        break;
+                    case 6:
+                        specifiedAnimal.KidFriendly = bool.Parse(element.Value);
+                        break;
+                    case 7:
+                        specifiedAnimal.PetFriendly = bool.Parse(element.Value);
+                        break;
+                    case 8:
+                        specifiedAnimal.Weight = int.Parse(element.Value);
+                        break;
+                }
+            }
+            context.SubmitChanges();
+        }
 
         public static Employee RetrieveEmployeeUser(string email, int employeeNumber)
         {            
@@ -200,11 +233,23 @@ namespace HumaneSociety
                                     select employee).First();
             return existingEmployee;
         }
-        public static IQueryable<DietPlan> GetDietPlan()
+        public static DietPlan GetDietPlan(string dietPlan)
         {
-            var getDietPlans = from dietPlan in context.DietPlans
-                               select dietPlan;
-            return getDietPlans;
+            try
+            {
+                var getDietPlan = (from d in context.DietPlans
+                                  where d.Name == dietPlan
+                                  select d).First();
+                return getDietPlan;
+            }
+            catch
+            {
+                DietPlan newDietPlan = new DietPlan();
+                newDietPlan.Name = dietPlan;
+                context.DietPlans.InsertOnSubmit(newDietPlan);
+                context.SubmitChanges();
+                return newDietPlan;
+            }
         }
         public static Species GetSpecies(string species)
         {
