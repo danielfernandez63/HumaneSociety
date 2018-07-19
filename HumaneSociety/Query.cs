@@ -17,6 +17,7 @@ namespace HumaneSociety
 
 
 
+
         public static void UpdateAdoption(bool someBool, Adoption adoption)
         {
 
@@ -48,37 +49,18 @@ namespace HumaneSociety
         {
 
         }
+
         public static void EnterUpdate(Animal animal, Dictionary<int, string> updates)
         {
 
-        }
+        }      
 
-        public static Species GetSpecies()
-        {
-
-        }
-        public static DietPlan GetDietPlan()
-        {
-
-        }
-      
-        public static Employee EmployeeLogin(string userName, string password)
-        {
-            
-        }
         public static Employee RetrieveEmployeeUser(string email, int employeeNumber)
         {
 
-        }  
-      
-        public static Client GetClient(string userName, string password)
-        {
+        }        
 
-        }
-        public static int GetUserAdoptionStatus(Client client)
-        {
 
-        }
         public static Animal GetAnimalByID(int ID)
         {
 
@@ -95,6 +77,7 @@ namespace HumaneSociety
         {
 
         }
+
 
 
 
@@ -129,6 +112,12 @@ namespace HumaneSociety
                 context.Employees.InsertOnSubmit(employee);
                 context.SubmitChanges();
             }
+        }
+
+
+        public static void RunEmployeeQueries(Employee employee, string message)
+        {
+
         }
 
         public static void RemoveAnimal(Animal animal)
@@ -216,6 +205,61 @@ namespace HumaneSociety
 
             }
 
+        }
+        public static IQueryable<Adoption> GetUserAdoptionStatus(Client client)
+        {
+            var adoptionStatus = from status in context.Adoptions
+                                 where status.ClientId == client.ClientId
+                                 select status;
+            return adoptionStatus;
+        }
+        public static Client GetClient(string userName, string password)
+        {
+            var existingClient = (from client in context.Clients
+                                  where client.UserName == userName && client.Password == password
+                                  select client).First();
+            return existingClient;
+        }
+        public static Employee EmployeeLogin(string userName, string password)
+        {
+            var existingEmployee = (from employee in context.Employees
+                                    where employee.UserName == userName && employee.Password == password
+                                    select employee).First();
+            return existingEmployee;
+        }
+        public static IQueryable<DietPlan> GetDietPlan()
+        {
+            var getDietPlans = from dietPlan in context.DietPlans
+                               select dietPlan;
+            return getDietPlans;
+        }
+        public static IQueryable<Species> GetSpecies()
+        {
+            var getSpecies = from species in context.Species
+                             select species;
+            return getSpecies;
+        }
+        public static IQueryable<AnimalShot> GetShots(Animal animal)
+        {
+            var animalShots = from shots in context.AnimalShots
+                              where shots.AnimalId == animal.AnimalId
+                              select shots;
+            return animalShots;
+        }
+        public static void UpdateShot(string shot, Animal animal)
+        {
+            AnimalShot newShot = new AnimalShot();
+            newShot.AnimalId = animal.AnimalId;
+            newShot.DateReceived = DateTime.Now;
+            context.AnimalShots.InsertOnSubmit(newShot);
+            context.SubmitChanges();
+
+        }
+
+        public static void UpdateAdoption(bool willApprove, Adoption adoption)
+        {
+            var updatedAdoption = willApprove == true ? adoption.ApprovalStatus = "Approved" : adoption.ApprovalStatus = "Denied";
+            context.SubmitChanges();
         }
 
         //public static Room GetRoom(int animalID)                      might have been copied
