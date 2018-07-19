@@ -13,6 +13,43 @@ namespace HumaneSociety
         public static HumaneSocietyDataContext context = new HumaneSocietyDataContext();
 
 
+
+
+
+
+
+        public static void UpdateAdoption(bool someBool, Adoption adoption)
+        {
+
+        }
+
+        public static Room GetRoom(int animalID)
+        {
+            var roomResult = (from room in context.Rooms
+                              where room.AnimalId == animalID
+                              select room).First();
+            return roomResult;
+        }
+        public static IQueryable<Adoption> GetPendingAdoptions()
+        {
+            var pendingAdoptions = from adoption in context.Adoptions where adoption.ApprovalStatus == "pending" select adoption;
+            return pendingAdoptions;
+        }
+        public static void UpdateAdoption(bool willApprove, Adoption adoption)
+        {
+            var updatedAdoption = willApprove == true ? adoption.ApprovalStatus = "Approved" : adoption.ApprovalStatus = "Denied";
+        }
+
+
+        public static AnimalShot GetShots(Animal animal)
+        {
+
+        }
+        public static void UpdateShot(string shot, Animal animal)
+        {
+
+        }
+
         public static void EnterUpdate(Animal animal, Dictionary<int, string> updates)
         {
 
@@ -36,28 +73,106 @@ namespace HumaneSociety
                                select states;
             return getStates;
         }
+
+
+
+
+
+
+        public static void RunEmployeeQueries(Employee employee, string message)
+        {
+            // delegate
+            if (message == "update")
+            {
+                Employee name = (from n in context.Employees where n.EmployeeId == employee.EmployeeId select n).First();
+                name.FirstName = employee.FirstName;
+                name.LastName = employee.LastName;
+                name.Email = employee.Email;
+                name.EmployeeId = employee.EmployeeId;
+                context.SubmitChanges();
+            }
+            else if (message == "read")
+            {
+                Employee name = (from n in context.Employees where n.EmployeeNumber == employee.EmployeeNumber select n).First();
+                Console.WriteLine("Here are the results for the employee you searched for: " + employee);
+                Console.ReadLine();
+            }
+            else if (message == "delete")
+            {
+                Employee name = (from n in context.Employees where n.EmployeeNumber == employee.EmployeeNumber select n).First();
+                context.Employees.DeleteOnSubmit(employee);
+                context.SubmitChanges();
+            }
+            else if (message == "create")
+            {
+                context.Employees.InsertOnSubmit(employee);
+                context.SubmitChanges();
+            }
+        }
+
+
         public static void RunEmployeeQueries(Employee employee, string message)
         {
 
         }
+
         public static void RemoveAnimal(Animal animal)
         {
+            try
+            {
+                Animal name = (from n in context.Animals where n.AnimalId == animal.AnimalId select n).First();
+                context.Animals.DeleteOnSubmit(animal);
+                context.SubmitChanges();
 
+            }
+            catch
+            {
+
+            }
         }
 
         public static void AddAnimal(Animal animal)
         {
+            try
+            {             
+                context.Animals.InsertOnSubmit(animal);
+                context.SubmitChanges();             
+            }
+            catch
+            {
+               
+            }
 
         }
 
         public static bool CheckEmployeeUsernameExist(string username)
         {
-            return false;
+            try
+            {
+               Employee person = (from n in context.Employees where n.UserName == username select n).First();
+
+                return true;            
+            }
+            catch
+            {
+                return false;
+            }
+         
         }
 
         public static void AddUsernameAndPassword(Employee employee)
         {
+            try
+            {
+                Employee person = (from n in context.Employees where n.EmployeeId.Equals(employee.EmployeeId) select n).First();
+                person.Password = employee.Password;
+                person.UserName = employee.UserName;
+                context.SubmitChanges();
+            }
+            catch
+            {
 
+            }
         }
 
         public static void AddNewClient(string firstName, string lastName, string username, string password, string email, string streetAddress, int zipCode, int state)
@@ -159,18 +274,18 @@ namespace HumaneSociety
             context.SubmitChanges();
         }
 
-        public static Room GetRoom(int animalID)
-        {
-            var roomResult = (from room in context.Rooms
-                              where room.AnimalId == animalID
-                              select room).First();
-            return roomResult;
-        }
-        public static IQueryable<Adoption> GetPendingAdoptions()
-        {
-            var pendingAdoptions = from adoption in context.Adoptions where adoption.ApprovalStatus == "pending" select adoption;
-            return pendingAdoptions;
-        }
+        //public static Room GetRoom(int animalID)                      might have been copied
+        //{
+        //    var roomResult = (from room in context.Rooms
+        //                      where room.AnimalId == animalID
+        //                      select room).First();
+        //    return roomResult;
+        //}
+        //public static IQueryable<Adoption> GetPendingAdoptions()
+        //{
+        //    var pendingAdoptions = from adoption in context.Adoptions where adoption.ApprovalStatus == "pending" select adoption;
+        //    return pendingAdoptions;
+        //}
 
         public static void UpdatePassword(Client client)
         {
