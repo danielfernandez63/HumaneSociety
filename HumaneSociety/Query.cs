@@ -18,8 +18,18 @@ namespace HumaneSociety
         }      
 
         public static Employee RetrieveEmployeeUser(string email, int employeeNumber)
-        {
-
+        {            
+                var employeeSearch = (from e in context.Employees where e.Email == email && e.EmployeeNumber == employeeNumber select e).First();
+                if (employeeSearch.EmployeeId > 0)
+                {
+                    return employeeSearch;
+                }
+                else
+                {
+                    employeeSearch.Password = null;
+                    return employeeSearch;
+                }
+                        
         }    
 
         public static void RunEmployeeQueries(Employee employee, string message)
