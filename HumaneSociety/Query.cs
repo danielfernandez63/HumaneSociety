@@ -196,11 +196,23 @@ namespace HumaneSociety
                                select dietPlan;
             return getDietPlans;
         }
-        public static IQueryable<Species> GetSpecies()
+        public static Species GetSpecies(string species)
         {
-            var getSpecies = from species in context.Species
-                             select species;
-            return getSpecies;
+            try
+            {
+                var getSpecies = (from s in context.Species
+                                  where s.Name == species
+                                  select s).First();
+                return getSpecies;
+            }
+            catch
+            {
+                Species newSpecies = new Species();
+                newSpecies.Name = species;
+                context.Species.InsertOnSubmit(newSpecies);
+                context.SubmitChanges();
+                return newSpecies;
+            }
         }
         public static IQueryable<AnimalShot> GetShots(Animal animal)
         {
