@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Database Name="HumaneSociety" Class="HumaneSocietyDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=DANS-WINDOW;Initial Catalog=HumaneSociety;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False" SettingsObjectName="HumaneSociety.Properties.Settings" SettingsPropertyName="HumaneSocietyConnectionString3" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="HumanSociety" Class="HumaneSocietyDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-USP05NA;Initial Catalog=HumanSociety;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False" SettingsObjectName="HumaneSociety.Properties.Settings" SettingsPropertyName="HumanSocietyConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Addresses" Member="Addresses">
     <Type Name="Address">
       <Column Name="AddressId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -39,10 +39,10 @@
       <Column Name="EmployeeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Animal_Adoption" Member="Adoptions" ThisKey="AnimalId" OtherKey="AnimalId" Type="Adoption" />
       <Association Name="Animal_AnimalShot" Member="AnimalShots" ThisKey="AnimalId" OtherKey="AnimalId" Type="AnimalShot" />
-      <Association Name="Animal_Room" Member="Rooms" ThisKey="AnimalId" OtherKey="AnimalId" Type="Room" />
+      <Association Name="Animal_Room1" Member="Rooms" ThisKey="AnimalId" OtherKey="AnimalId" Type="Room" />
       <Association Name="DietPlan_Animal" Member="DietPlan" ThisKey="DietPlanId" OtherKey="DietPlanId" Type="DietPlan" IsForeignKey="true" />
       <Association Name="Employee_Animal" Member="Employee" ThisKey="EmployeeId" OtherKey="EmployeeId" Type="Employee" IsForeignKey="true" />
-      <Association Name="Specy_Animal" Member="Specy" ThisKey="SpeciesId" OtherKey="SpeciesId" Type="Specy" IsForeignKey="true" />
+      <Association Name="Specy_Animal" Member="Species" Storage="_Specy" ThisKey="SpeciesId" OtherKey="SpeciesId" Type="Species" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.AnimalShots" Member="AnimalShots">
@@ -91,13 +91,6 @@
       <Association Name="Employee_Animal" Member="Animals" ThisKey="EmployeeId" OtherKey="EmployeeId" Type="Animal" />
     </Type>
   </Table>
-  <Table Name="dbo.Rooms" Member="Rooms">
-    <Type Name="Room">
-      <Column Name="RoomId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="AnimalId" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Animal_Room" Member="Animal" ThisKey="AnimalId" OtherKey="AnimalId" Type="Animal" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Shots" Member="Shots">
     <Type Name="Shot">
       <Column Name="ShotId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -106,7 +99,7 @@
     </Type>
   </Table>
   <Table Name="dbo.Species" Member="Species">
-    <Type Name="Specy">
+    <Type Name="Species">
       <Column Name="SpeciesId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Association Name="Specy_Animal" Member="Animals" ThisKey="SpeciesId" OtherKey="SpeciesId" Type="Animal" />
@@ -118,6 +111,14 @@
       <Column Name="Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="Abbreviation" Type="System.String" DbType="VarChar(2)" CanBeNull="true" />
       <Association Name="USState_Address" Member="Addresses" ThisKey="USStateId" OtherKey="USStateId" Type="Address" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Rooms" Member="Rooms">
+    <Type Name="Room">
+      <Column Name="RoomId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="AnimalId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RoomNumbers" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Animal_Room1" Member="Animal" ThisKey="AnimalId" OtherKey="AnimalId" Type="Animal" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
