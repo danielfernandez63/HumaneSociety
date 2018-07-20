@@ -74,6 +74,7 @@ namespace HumaneSociety
             {
                 Console.Clear();
                 UserInterface.DisplayUserOptions("Employee update unsuccessful please try again or type exit;");
+                Console.ReadLine();
                 return;
             }
         }
@@ -95,7 +96,7 @@ namespace HumaneSociety
         private void RemoveEmployee()
         {
             Employee employee = new Employee();
-            employee.LastName = UserInterface.GetStringData("last name", "the employee's"); ;
+            employee.LastName = UserInterface.GetStringData("last name", "the employee's");
             employee.EmployeeNumber = int.Parse(UserInterface.GetStringData("employee number", "the employee's"));
             try
             {

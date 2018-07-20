@@ -1930,9 +1930,10 @@ namespace HumaneSociety
 		private string _Email;
 		
 		private EntitySet<Animal> _Animals;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
+
+
+        #region Extensibility Method Definitions
+        partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
     partial void OnEmployeeIdChanging(int value);

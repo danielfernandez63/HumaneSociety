@@ -17,6 +17,12 @@ namespace HumaneSociety
         public static void RunEmployeeQueryUpdate(Employee employee)
         {
             Employee name = (from n in context.Employees where n.EmployeeId == employee.EmployeeId select n).First();
+            //Console.WriteLine("Update first name: ");
+            //Console.ReadLine();
+            //string bob = "bobby";
+            //name.FirstName = bob;
+            //Console.WriteLine(name.FirstName);
+            //Console.ReadLine();
             name.FirstName = employee.FirstName;
             name.LastName = employee.LastName;
             name.Email = employee.Email;
@@ -31,8 +37,8 @@ namespace HumaneSociety
         }
         public static void RunEmployeeQueryDelete(Employee employee)
         {
-            Employee name = (from n in context.Employees where n.EmployeeNumber == employee.EmployeeNumber select n).First();
-            context.Employees.DeleteOnSubmit(employee);
+            var name = (from n in context.Employees where n.EmployeeNumber == employee.EmployeeNumber select n).First();
+            context.Employees.DeleteOnSubmit(name);
             context.SubmitChanges();
         }
         public static void RunEmployeeQueryCreate(Employee employee)
@@ -66,7 +72,7 @@ namespace HumaneSociety
             {
                 runEmployeeCrudDelegate = RunEmployeeQueryCreate;
                 runEmployeeCrudDelegate(employee);
-<<<<<<< HEAD
+
             }
         }
         public static void ImportCSVDataToDatabase(string[][] csvOutputData) // CSV Data to New Record
@@ -84,8 +90,7 @@ namespace HumaneSociety
                 newAnimal.AdoptionStatus = csvOutputData[i][10];
                 context.Animals.InsertOnSubmit(newAnimal);
                 context.SubmitChanges();
-=======
->>>>>>> 6868244ce47ce623a8b791bb6ad8c9ed03e731fa
+
             }
         }
 
