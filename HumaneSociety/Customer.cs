@@ -49,8 +49,7 @@ namespace HumaneSociety
             CheckIfAccountComplete();
             UserInterface.DisplayUserOptions(options);
             int input = UserInterface.GetIntegerData();
-            RunUserInput(input);
-            
+            RunUserInput(input);            
         }
 
         private void RunUserInput(int input)
@@ -111,6 +110,7 @@ namespace HumaneSociety
             {
                 Query.Adopt(animal, client);
                 UserInterface.DisplayUserOptions("Adoption request sent we will hold $75 adoption fee until processed");
+                
             }
         }
 

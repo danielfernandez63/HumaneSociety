@@ -13,6 +13,7 @@ namespace HumaneSociety
         public static HumaneSocietyDataContext context = new HumaneSocietyDataContext();
         public delegate void employeeQueryCRUD(Employee employee);
 
+
         public static void RunEmployeeQueryUpdate(Employee employee)
         {
             Employee name = (from n in context.Employees where n.EmployeeId == employee.EmployeeId select n).First();
@@ -42,7 +43,7 @@ namespace HumaneSociety
 
 
 
-         static void RunEmployeeQueries(Employee employee, string message)
+        static void RunEmployeeQueries(Employee employee, string message)
         {
             employeeQueryCRUD runEmployeeCrudDelegate;
 
@@ -67,6 +68,8 @@ namespace HumaneSociety
             runEmployeeCrudDelegate(employee);
 
         }
+
+        
         public static void EnterUpdate(Animal animal, Dictionary<int, string> updates)
         {
             foreach (KeyValuePair<int, string> element in updates)
@@ -121,6 +124,7 @@ namespace HumaneSociety
         }
 
 
+
         public static void RemoveAnimal(Animal animal)
         {
             try
@@ -156,8 +160,7 @@ namespace HumaneSociety
         {
             try
             {
-               Employee person = (from n in context.Employees where n.UserName == username select n).First();
-
+                Employee person = (from n in context.Employees where n.UserName == username select n).First();
                 return true;            
             }
             catch
@@ -227,7 +230,7 @@ namespace HumaneSociety
             Adoption newAdoption = new Adoption();
             newAdoption.ClientId = client.ClientId;
             newAdoption.AnimalId = animal.AnimalId;
-            newAdoption.AdoptionFee = 75;
+            newAdoption.AdoptionFee = 200;            
             context.Adoptions.InsertOnSubmit(newAdoption);
             context.SubmitChanges();
         }
@@ -314,7 +317,7 @@ namespace HumaneSociety
 
         public static void UpdateAdoption(bool willApprove, Adoption adoption)
         {
-            var updatedAdoption = willApprove == true ? adoption.ApprovalStatus = "Approved" : adoption.ApprovalStatus = "Denied";
+            var updatedAdoption = willApprove == true ? adoption.ApprovalStatus = "Adopted" : adoption.ApprovalStatus = "Adoption Denied";
             context.SubmitChanges();
         }
 
@@ -325,6 +328,22 @@ namespace HumaneSociety
                               select room).First();
             return roomResult;
         }
+        public static void UpdateRoom(Animal animal, int newRoomNumber)
+        {          
+            var roomResult = (from room in context.Rooms
+                                where room.AnimalId == animal.AnimalId
+                                select room).First();
+            if (roomResult.RoomNumbers == null)
+            {
+                roomResult.RoomNumbers = newRoomNumber;
+                context.SubmitChanges();
+            }
+            else
+            {
+                roomResult.RoomNumbers = roomResult.RoomNumbers;
+            }
+        }
+
         public static IQueryable<Adoption> GetPendingAdoptions()
         {
             var pendingAdoptions = from adoption in context.Adoptions where adoption.ApprovalStatus == "pending" select adoption;

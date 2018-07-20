@@ -9,6 +9,20 @@ namespace HumaneSociety
     class UserEmployee : User
     {
         Employee employee;
+        double humaneSocietyBankAccount = 0;
+
+        public double HumaneSocietyBankAccount
+        {
+            get
+            {
+                return humaneSocietyBankAccount;
+            }
+            set
+            {
+                humaneSocietyBankAccount = value;
+            }
+        }
+
         
         public override void LogIn()
         {
@@ -87,13 +101,14 @@ namespace HumaneSociety
             if ((bool)UserInterface.GetBitData())
             {
                 Query.UpdateAdoption(true, adoption);
+                HumaneSocietyBankAccount += 200;
             }
             else
             {
                 Query.UpdateAdoption(false, adoption);
             }
         }
-
+        
         private void CheckAnimalStatus()
         {
             Console.Clear();
@@ -184,10 +199,10 @@ namespace HumaneSociety
         private void UpdateAnimal(Animal animal)
         {
             Dictionary<int, string> updates = new Dictionary<int, string>();
-            List<string> options = new List<string>() { "Select Updates: (Enter number and choose finished when finished)", "1. Category", "2. Breed", "3. Name", "4. Age", "5. Demeanor", "6. Kid friendly", "7. Pet friendly", "8. Weight", "9. Finished" };
+            List<string> options = new List<string>() { "Select Updates: (Enter number and choose finished when finished)", "1. Category", "2. Breed", "3. Name", "4. Age", "5. Demeanor", "6. Kid friendly", "7. Pet friendly", "8. Weight", "9. Change Room", "10. Finished" };
             UserInterface.DisplayUserOptions(options);
             string input = UserInterface.GetUserInput();
-            if(input.ToLower() == "9" ||input.ToLower() == "finished")
+            if(input.ToLower() == "10" ||input.ToLower() == "finished")
             {
                 Query.EnterUpdate(animal, updates);
             }

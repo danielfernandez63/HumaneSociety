@@ -22,7 +22,7 @@ namespace HumaneSociety
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="HumaneSociety")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="HumanSociety")]
 	public partial class HumaneSocietyDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -51,9 +51,6 @@ namespace HumaneSociety
     partial void InsertEmployee(Employee instance);
     partial void UpdateEmployee(Employee instance);
     partial void DeleteEmployee(Employee instance);
-    partial void InsertRoom(Room instance);
-    partial void UpdateRoom(Room instance);
-    partial void DeleteRoom(Room instance);
     partial void InsertShot(Shot instance);
     partial void UpdateShot(Shot instance);
     partial void DeleteShot(Shot instance);
@@ -63,10 +60,13 @@ namespace HumaneSociety
     partial void InsertUSState(USState instance);
     partial void UpdateUSState(USState instance);
     partial void DeleteUSState(USState instance);
+    partial void InsertRoom(Room instance);
+    partial void UpdateRoom(Room instance);
+    partial void DeleteRoom(Room instance);
     #endregion
 		
 		public HumaneSocietyDataContext() : 
-				base(global::HumaneSociety.Properties.Settings.Default.HumaneSocietyConnectionString3, mappingSource)
+				base(global::HumaneSociety.Properties.Settings.Default.HumanSocietyConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -151,14 +151,6 @@ namespace HumaneSociety
 			}
 		}
 		
-		public System.Data.Linq.Table<Room> Rooms
-		{
-			get
-			{
-				return this.GetTable<Room>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Shot> Shots
 		{
 			get
@@ -180,6 +172,14 @@ namespace HumaneSociety
 			get
 			{
 				return this.GetTable<USState>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Room> Rooms
+		{
+			get
+			{
+				return this.GetTable<Room>();
 			}
 		}
 	}
@@ -715,7 +715,7 @@ namespace HumaneSociety
 		
 		private EntityRef<Employee> _Employee;
 		
-		private EntityRef<Species> _Species;
+		private EntityRef<Species> _Specy;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -754,7 +754,7 @@ namespace HumaneSociety
 			this._Rooms = new EntitySet<Room>(new Action<Room>(this.attach_Rooms), new Action<Room>(this.detach_Rooms));
 			this._DietPlan = default(EntityRef<DietPlan>);
 			this._Employee = default(EntityRef<Employee>);
-			this._Species = default(EntityRef<Species>);
+			this._Specy = default(EntityRef<Species>);
 			OnCreated();
 		}
 		
@@ -809,7 +809,7 @@ namespace HumaneSociety
 			{
 				if ((this._SpeciesId != value))
 				{
-					if (this._Species.HasLoadedOrAssignedValue)
+					if (this._Specy.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
@@ -1036,7 +1036,7 @@ namespace HumaneSociety
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Animal_Room", Storage="_Rooms", ThisKey="AnimalId", OtherKey="AnimalId")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Animal_Room1", Storage="_Rooms", ThisKey="AnimalId", OtherKey="AnimalId")]
 		public EntitySet<Room> Rooms
 		{
 			get
@@ -1117,26 +1117,26 @@ namespace HumaneSociety
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Species_Animal", Storage="_Species", ThisKey="SpeciesId", OtherKey="SpeciesId", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Specy_Animal", Storage="_Specy", ThisKey="SpeciesId", OtherKey="SpeciesId", IsForeignKey=true)]
 		public Species Species
 		{
 			get
 			{
-				return this._Species.Entity;
+				return this._Specy.Entity;
 			}
 			set
 			{
-				Species previousValue = this._Species.Entity;
+				Species previousValue = this._Specy.Entity;
 				if (((previousValue != value) 
-							|| (this._Species.HasLoadedOrAssignedValue == false)))
+							|| (this._Specy.HasLoadedOrAssignedValue == false)))
 				{
 					this.SendPropertyChanging();
 					if ((previousValue != null))
 					{
-						this._Species.Entity = null;
+						this._Specy.Entity = null;
 						previousValue.Animals.Remove(this);
 					}
-					this._Species.Entity = value;
+					this._Specy.Entity = value;
 					if ((value != null))
 					{
 						value.Animals.Add(this);
@@ -2143,133 +2143,6 @@ namespace HumaneSociety
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Rooms")]
-	public partial class Room : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _RoomId;
-		
-		private System.Nullable<int> _AnimalId;
-		
-		private EntityRef<Animal> _Animal;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnRoomIdChanging(int value);
-    partial void OnRoomIdChanged();
-    partial void OnAnimalIdChanging(System.Nullable<int> value);
-    partial void OnAnimalIdChanged();
-    #endregion
-		
-		public Room()
-		{
-			this._Animal = default(EntityRef<Animal>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoomId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int RoomId
-		{
-			get
-			{
-				return this._RoomId;
-			}
-			set
-			{
-				if ((this._RoomId != value))
-				{
-					this.OnRoomIdChanging(value);
-					this.SendPropertyChanging();
-					this._RoomId = value;
-					this.SendPropertyChanged("RoomId");
-					this.OnRoomIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnimalId", DbType="Int")]
-		public System.Nullable<int> AnimalId
-		{
-			get
-			{
-				return this._AnimalId;
-			}
-			set
-			{
-				if ((this._AnimalId != value))
-				{
-					if (this._Animal.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnAnimalIdChanging(value);
-					this.SendPropertyChanging();
-					this._AnimalId = value;
-					this.SendPropertyChanged("AnimalId");
-					this.OnAnimalIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Animal_Room", Storage="_Animal", ThisKey="AnimalId", OtherKey="AnimalId", IsForeignKey=true)]
-		public Animal Animal
-		{
-			get
-			{
-				return this._Animal.Entity;
-			}
-			set
-			{
-				Animal previousValue = this._Animal.Entity;
-				if (((previousValue != value) 
-							|| (this._Animal.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Animal.Entity = null;
-						previousValue.Rooms.Remove(this);
-					}
-					this._Animal.Entity = value;
-					if ((value != null))
-					{
-						value.Rooms.Add(this);
-						this._AnimalId = value.AnimalId;
-					}
-					else
-					{
-						this._AnimalId = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Animal");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Shots")]
 	public partial class Shot : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -2452,7 +2325,7 @@ namespace HumaneSociety
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Species_Animal", Storage="_Animals", ThisKey="SpeciesId", OtherKey="SpeciesId")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Specy_Animal", Storage="_Animals", ThisKey="SpeciesId", OtherKey="SpeciesId")]
 		public EntitySet<Animal> Animals
 		{
 			get
@@ -2633,6 +2506,157 @@ namespace HumaneSociety
 		{
 			this.SendPropertyChanging();
 			entity.USState = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Rooms")]
+	public partial class Room : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _RoomId;
+		
+		private System.Nullable<int> _AnimalId;
+		
+		private System.Nullable<int> _RoomNumbers;
+		
+		private EntityRef<Animal> _Animal;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnRoomIdChanging(int value);
+    partial void OnRoomIdChanged();
+    partial void OnAnimalIdChanging(System.Nullable<int> value);
+    partial void OnAnimalIdChanged();
+    partial void OnRoomNumbersChanging(System.Nullable<int> value);
+    partial void OnRoomNumbersChanged();
+    #endregion
+		
+		public Room()
+		{
+			this._Animal = default(EntityRef<Animal>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoomId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int RoomId
+		{
+			get
+			{
+				return this._RoomId;
+			}
+			set
+			{
+				if ((this._RoomId != value))
+				{
+					this.OnRoomIdChanging(value);
+					this.SendPropertyChanging();
+					this._RoomId = value;
+					this.SendPropertyChanged("RoomId");
+					this.OnRoomIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnimalId", DbType="Int")]
+		public System.Nullable<int> AnimalId
+		{
+			get
+			{
+				return this._AnimalId;
+			}
+			set
+			{
+				if ((this._AnimalId != value))
+				{
+					if (this._Animal.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAnimalIdChanging(value);
+					this.SendPropertyChanging();
+					this._AnimalId = value;
+					this.SendPropertyChanged("AnimalId");
+					this.OnAnimalIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RoomNumbers", DbType="Int")]
+		public System.Nullable<int> RoomNumbers
+		{
+			get
+			{
+				return this._RoomNumbers;
+			}
+			set
+			{
+				if ((this._RoomNumbers != value))
+				{
+					this.OnRoomNumbersChanging(value);
+					this.SendPropertyChanging();
+					this._RoomNumbers = value;
+					this.SendPropertyChanged("RoomNumbers");
+					this.OnRoomNumbersChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Animal_Room1", Storage="_Animal", ThisKey="AnimalId", OtherKey="AnimalId", IsForeignKey=true)]
+		public Animal Animal
+		{
+			get
+			{
+				return this._Animal.Entity;
+			}
+			set
+			{
+				Animal previousValue = this._Animal.Entity;
+				if (((previousValue != value) 
+							|| (this._Animal.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Animal.Entity = null;
+						previousValue.Rooms.Remove(this);
+					}
+					this._Animal.Entity = value;
+					if ((value != null))
+					{
+						value.Rooms.Add(this);
+						this._AnimalId = value.AnimalId;
+					}
+					else
+					{
+						this._AnimalId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Animal");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }
