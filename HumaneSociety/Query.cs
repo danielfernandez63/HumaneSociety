@@ -26,7 +26,7 @@ namespace HumaneSociety
         public static void RunEmployeeQueryRead(Employee employee)
         {
             Employee name = (from n in context.Employees where n.EmployeeNumber == employee.EmployeeNumber select n).First();
-            Console.WriteLine("Here are the results for the employee you searched for: " + employee);
+            Console.WriteLine($"EmployeeID: {name.EmployeeId} Employee Number: {name.EmployeeNumber} Employee Name: {name.FirstName + " " + name.LastName} Employee UserName: {name.UserName} Employee Password: {name.Password} Employee email: {name.Email}");
             Console.ReadLine();
         }
         public static void RunEmployeeQueryDelete(Employee employee)
@@ -43,33 +43,49 @@ namespace HumaneSociety
 
 
 
-        static void RunEmployeeQueries(Employee employee, string message)
+        public static void RunEmployeeQueries(Employee employee, string message)
         {
             employeeQueryCRUD runEmployeeCrudDelegate;
 
             if (message == "update")
             {
-
                 runEmployeeCrudDelegate = RunEmployeeQueryUpdate;
+                runEmployeeCrudDelegate(employee);
             }
             else if (message == "read")
             {
                 runEmployeeCrudDelegate = RunEmployeeQueryRead;
+                runEmployeeCrudDelegate(employee);
             }
             else if (message == "delete")
             {
                 runEmployeeCrudDelegate = RunEmployeeQueryDelete;
+                runEmployeeCrudDelegate(employee);
             }
             else if (message == "create")
             {
                 runEmployeeCrudDelegate = RunEmployeeQueryCreate;
+                runEmployeeCrudDelegate(employee);
             }
-
-            runEmployeeCrudDelegate(employee);
-
+        }
+        public static void ImportCSVDataToDatabase(string[][] csvOutputData) // CSV Data to New Record
+        {
+            for (int i = 0; i < csvOutputData.Count(); i++)
+            {
+                Animal newAnimal = new Animal();
+                newAnimal.AnimalId = int.Parse(csvOutputData[i][0]);
+                newAnimal.Name = csvOutputData[i][1];
+                newAnimal.Weight = int.Parse(csvOutputData[i][3]);
+                newAnimal.Age = int.Parse(csvOutputData[i][4]);
+                newAnimal.Demeanor = csvOutputData[i][7];
+                newAnimal.KidFriendly = (int.Parse(csvOutputData[i][8]) == 1) ? true : false;
+                newAnimal.PetFriendly = (int.Parse(csvOutputData[i][9]) == 1) ? true : false;
+                newAnimal.AdoptionStatus = csvOutputData[i][10];
+                context.Animals.InsertOnSubmit(newAnimal);
+                context.SubmitChanges();
+            }
         }
 
-        
         public static void EnterUpdate(Animal animal, Dictionary<int, string> updates)
         {
             foreach (KeyValuePair<int, string> element in updates)
@@ -122,8 +138,6 @@ namespace HumaneSociety
             }
 
         }
-
-
 
         public static void RemoveAnimal(Animal animal)
         {

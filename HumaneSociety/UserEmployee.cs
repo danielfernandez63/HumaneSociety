@@ -40,7 +40,7 @@ namespace HumaneSociety
         }
         protected override void RunUserMenus()
         {
-            List<string> options = new List<string>() { "What would you like to do? (select number of choice)", "1. Add animal", "2. Remove Anmial", "3. Check Animal Status",  "4. Approve Adoption" };
+            List<string> options = new List<string>() { "What would you like to do? (select number of choice)", "1. Add animal", "2. Remove Anmial", "3. Check Animal Status",  "4. Approve Adoption", "5. Update Room" };
             UserInterface.DisplayUserOptions(options);
             string input = UserInterface.GetUserInput();
             RunUserInput(input);
@@ -65,12 +65,16 @@ namespace HumaneSociety
                     CheckAdoptions();
                     RunUserMenus();
                     return;
+                case "5":
+                    //update room
+                    return;
                 default:
                     UserInterface.DisplayUserOptions("Input not accepted please try again");
                     RunUserMenus();
                     return;
             }
         }
+
 
         private void CheckAdoptions()
         {
@@ -199,10 +203,10 @@ namespace HumaneSociety
         private void UpdateAnimal(Animal animal)
         {
             Dictionary<int, string> updates = new Dictionary<int, string>();
-            List<string> options = new List<string>() { "Select Updates: (Enter number and choose finished when finished)", "1. Category", "2. Breed", "3. Name", "4. Age", "5. Demeanor", "6. Kid friendly", "7. Pet friendly", "8. Weight", "9. Change Room", "10. Finished" };
+            List<string> options = new List<string>() { "Select Updates: (Enter number and choose finished when finished)", "1. Category", "2. Breed", "3. Name", "4. Age", "5. Demeanor", "6. Kid friendly", "7. Pet friendly", "8. Weight", "9. Finished"};
             UserInterface.DisplayUserOptions(options);
             string input = UserInterface.GetUserInput();
-            if(input.ToLower() == "10" ||input.ToLower() == "finished")
+            if(input.ToLower() == "9" ||input.ToLower() == "finished")
             {
                 Query.EnterUpdate(animal, updates);
             }

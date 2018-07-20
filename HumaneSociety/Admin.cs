@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,15 +9,11 @@ namespace HumaneSociety
 {
     class Admin : User
     {
-
-
-
-
         public override void LogIn()
         {
             UserInterface.DisplayUserOptions("What is your password?");
             string password = UserInterface.GetUserInput();
-            if (password.ToLower() != "poiuyt")
+            if (password.ToLower() != "password")
             {
                 UserInterface.DisplayUserOptions("Incorrect please try again or type exit");
             }
@@ -25,11 +22,10 @@ namespace HumaneSociety
                 RunUserMenus();
             }
         }
-
         protected override void RunUserMenus()
         {
             Console.Clear();
-            List<string> options = new List<string>() { "Admin log in successful.", "What would you like to do?", "1. Create new employee", "2. Delete employee", "3. Read employee info ", "4. Update emplyee info", "(type 1, 2, 3, 4,  create, read, update, or delete)" };
+            List<string> options = new List<string>() { "Admin log in successful.", "What would you like to do?", "1. Create new employee", "2. Delete employee", "3. Read employee info ", "4. Update employee info", "(type 1, 2, 3, 4,  create, read, update, or delete)" };
             UserInterface.DisplayUserOptions(options);
             string input = UserInterface.GetUserInput();
             RunInput(input);
@@ -62,7 +58,6 @@ namespace HumaneSociety
                 RunUserMenus();
             }
         }
-
         private void UpdateEmployee()
         {
             Employee employee = new Employee();
@@ -82,7 +77,6 @@ namespace HumaneSociety
                 return;
             }
         }
-
         private void ReadEmployee()
         {
             try
@@ -98,7 +92,6 @@ namespace HumaneSociety
                 return;
             }
         }
-
         private void RemoveEmployee()
         {
             Employee employee = new Employee();
@@ -117,14 +110,14 @@ namespace HumaneSociety
                 RemoveEmployee();
             }
         }
-
         private void AddEmployee()
         {
             Employee employee = new Employee();
             employee.FirstName = UserInterface.GetStringData("first name", "the employee's");
             employee.LastName = UserInterface.GetStringData("last name", "the employee's");
             employee.EmployeeNumber = int.Parse(UserInterface.GetStringData("employee number", "the employee's"));
-            employee.Email = UserInterface.GetStringData("email", "the employee's"); ;
+            employee.Email = UserInterface.GetStringData("email", "the employee's"); 
+            
             try
             {
                 Query.RunEmployeeQueries(employee, "create");
@@ -137,6 +130,16 @@ namespace HumaneSociety
                 return;
             }
         }
-
+        private void AnimalCSVToDatabase() 
+        {
+            var output = LoadAnimalCSV();
+            Query.ImportCSVDataToDatabase(output);
+        }
+        private string[][] LoadAnimalCSV() 
+        {            
+            string fileName = @"animals.csv";
+            var output = File.ReadAllLines(fileName).Select(x => x.Split(new[] { ',', '"', ' ' }, StringSplitOptions.RemoveEmptyEntries)).AsQueryable<string[]>().ToArray();
+            return output;
+        }
     }
 }
