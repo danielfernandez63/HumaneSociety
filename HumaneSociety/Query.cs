@@ -66,6 +66,7 @@ namespace HumaneSociety
             {
                 runEmployeeCrudDelegate = RunEmployeeQueryCreate;
                 runEmployeeCrudDelegate(employee);
+<<<<<<< HEAD
             }
         }
         public static void ImportCSVDataToDatabase(string[][] csvOutputData) // CSV Data to New Record
@@ -83,6 +84,8 @@ namespace HumaneSociety
                 newAnimal.AdoptionStatus = csvOutputData[i][10];
                 context.Animals.InsertOnSubmit(newAnimal);
                 context.SubmitChanges();
+=======
+>>>>>>> 6868244ce47ce623a8b791bb6ad8c9ed03e731fa
             }
         }
 
