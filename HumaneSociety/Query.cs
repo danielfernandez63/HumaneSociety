@@ -49,24 +49,24 @@ namespace HumaneSociety
 
             if (message == "update")
             {
-
                 runEmployeeCrudDelegate = RunEmployeeQueryUpdate;
+                runEmployeeCrudDelegate(employee);
             }
             else if (message == "read")
             {
                 runEmployeeCrudDelegate = RunEmployeeQueryRead;
+                runEmployeeCrudDelegate(employee);
             }
             else if (message == "delete")
             {
                 runEmployeeCrudDelegate = RunEmployeeQueryDelete;
+                runEmployeeCrudDelegate(employee);
             }
             else if (message == "create")
             {
                 runEmployeeCrudDelegate = RunEmployeeQueryCreate;
+                runEmployeeCrudDelegate(employee);
             }
-
-            runEmployeeCrudDelegate(employee);
-
         }
 
         
