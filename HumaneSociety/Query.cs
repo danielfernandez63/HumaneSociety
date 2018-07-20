@@ -11,7 +11,62 @@ namespace HumaneSociety
     public static class Query
     {
         public static HumaneSocietyDataContext context = new HumaneSocietyDataContext();
+        public delegate void employeeQueryCRUD(Employee employee);
 
+        public static void RunEmployeeQueryUpdate(Employee employee)
+        {
+            Employee name = (from n in context.Employees where n.EmployeeId == employee.EmployeeId select n).First();
+            name.FirstName = employee.FirstName;
+            name.LastName = employee.LastName;
+            name.Email = employee.Email;
+            name.EmployeeId = employee.EmployeeId;
+            context.SubmitChanges();
+        }
+        public static void RunEmployeeQueryRead(Employee employee)
+        {
+            Employee name = (from n in context.Employees where n.EmployeeNumber == employee.EmployeeNumber select n).First();
+            Console.WriteLine("Here are the results for the employee you searched for: " + employee);
+            Console.ReadLine();
+        }
+        public static void RunEmployeeQueryDelete(Employee employee)
+        {
+            Employee name = (from n in context.Employees where n.EmployeeNumber == employee.EmployeeNumber select n).First();
+            context.Employees.DeleteOnSubmit(employee);
+            context.SubmitChanges();
+        }
+        public static void RunEmployeeQueryCreate(Employee employee)
+        {
+            context.Employees.InsertOnSubmit(employee);
+            context.SubmitChanges();
+        }
+
+
+
+         static void RunEmployeeQueries(Employee employee, string message)
+        {
+            employeeQueryCRUD runEmployeeCrudDelegate;
+
+            if (message == "update")
+            {
+
+                runEmployeeCrudDelegate = RunEmployeeQueryUpdate;
+            }
+            else if (message == "read")
+            {
+                runEmployeeCrudDelegate = RunEmployeeQueryRead;
+            }
+            else if (message == "delete")
+            {
+                runEmployeeCrudDelegate = RunEmployeeQueryDelete;
+            }
+            else if (message == "create")
+            {
+                runEmployeeCrudDelegate = RunEmployeeQueryCreate;
+            }
+
+            runEmployeeCrudDelegate(employee);
+
+        }
         public static void EnterUpdate(Animal animal, Dictionary<int, string> updates)
         {
             foreach (KeyValuePair<int, string> element in updates)
@@ -51,49 +106,18 @@ namespace HumaneSociety
         }
 
         public static Employee RetrieveEmployeeUser(string email, int employeeNumber)
-        {            
-                var employeeSearch = (from e in context.Employees where e.Email == email && e.EmployeeNumber == employeeNumber select e).First();
-                if (employeeSearch.EmployeeId > 0)
-                {
-                    return employeeSearch;
-                }
-                else
-                {
-                    employeeSearch.Password = null;
-                    return employeeSearch;
-                }
-                        
-        }    
-
-        public static void RunEmployeeQueries(Employee employee, string message)
         {
-            // delegate
-            if (message == "update")
+            var employeeSearch = (from e in context.Employees where e.Email == email && e.EmployeeNumber == employeeNumber select e).First();
+            if (employeeSearch.EmployeeId > 0)
             {
-                Employee name = (from n in context.Employees where n.EmployeeId == employee.EmployeeId select n).First();
-                name.FirstName = employee.FirstName;
-                name.LastName = employee.LastName;
-                name.Email = employee.Email;
-                name.EmployeeId = employee.EmployeeId;
-                context.SubmitChanges();
+                return employeeSearch;
             }
-            else if (message == "read")
+            else
             {
-                Employee name = (from n in context.Employees where n.EmployeeNumber == employee.EmployeeNumber select n).First();
-                Console.WriteLine("Here are the results for the employee you searched for: " + employee);
-                Console.ReadLine();
+                employeeSearch.Password = null;
+                return employeeSearch;
             }
-            else if (message == "delete")
-            {
-                Employee name = (from n in context.Employees where n.EmployeeNumber == employee.EmployeeNumber select n).First();
-                context.Employees.DeleteOnSubmit(employee);
-                context.SubmitChanges();
-            }
-            else if (message == "create")
-            {
-                context.Employees.InsertOnSubmit(employee);
-                context.SubmitChanges();
-            }
+
         }
 
 
@@ -115,7 +139,9 @@ namespace HumaneSociety
         public static void AddAnimal(Animal animal)
         {
             try
-            {             
+            {       
+                
+               
                 context.Animals.InsertOnSubmit(animal);
                 context.SubmitChanges();             
             }

@@ -1,0 +1,86 @@
+
+CREATE TABLE Species (SpeciesId INTEGER IDENTITY (1,1) PRIMARY KEY, Name VARCHAR(50));
+
+CREATE TABLE DietPlans(DietPlanId INTEGER IDENTITY (1,1) PRIMARY KEY, Name VARCHAR(50), FoodType VARCHAR(50), FoodAmountInCups INTEGER);
+
+CREATE TABLE Animals (AnimalId INTEGER IDENTITY (1,1) PRIMARY KEY, Name VARCHAR(50), SpeciesId INTEGER FOREIGN KEY REFERENCES Species(SpeciesId), Weight INTEGER, Age INTEGER, DietPlanId INTEGER FOREIGN KEY REFERENCES DietPlans(DietPlanId));
+
+CREATE TABLE Rooms (RoomId INTEGER IDENTITY (1,1) PRIMARY KEY,  AnimalId INTEGER FOREIGN KEY REFERENCES Animals(AnimalId));
+
+CREATE TABLE Shots (ShotId INTEGER IDENTITY (1,1) PRIMARY KEY, Name VARCHAR(50));
+
+INSERT INTO Species VALUES('Dog');
+
+INSERT INTO Species VALUES('Cat');
+
+INSERT INTO Species VALUES('Narwhale');
+
+INSERT INTO Species VALUES('Platypus');
+
+INSERT INTO Species VALUES('Lion');
+
+
+
+
+
+
+
+INSERT INTO DietPlans VALUES('Blue Bat PurinaAlt', 'Dog food', 2);
+
+INSERT INTO DietPlans VALUES('Clearance Cat Food', 'Cat food', 1);
+
+INSERT INTO DietPlans VALUES('BaconStix', 'Narwhale food', 2);
+
+INSERT INTO DietPlans VALUES('FishBait', 'Platypus food', 1);
+
+INSERT INTO DietPlans VALUES('Carnivore Special', 'All meat', 3);
+
+
+
+INSERT INTO Rooms VALUES(null);
+
+INSERT INTO Rooms VALUES(null);
+
+INSERT INTO Rooms VALUES(null);
+
+INSERT INTO Rooms VALUES(null);
+
+INSERT INTO Rooms VALUES(null);
+
+INSERT INTO Rooms VALUES(null);
+
+INSERT INTO Rooms VALUES(null);
+
+INSERT INTO Rooms VALUES(null);
+
+INSERT INTO Rooms VALUES(null);
+
+INSERT INTO Rooms VALUES(null);
+
+
+
+
+
+INSERT INTO Shots VALUES('Dog shot')
+
+INSERT INTO Shots VALUES('Cat shot')
+
+INSERT INTO Shots VALUES('Narwhale shot')
+
+INSERT INTO Shots VALUES('Platypus shot')
+
+INSERT INTO Shots VALUES('Lion shot')
+
+
+
+
+
+INSERT INTO Animals VALUES('Balto', 1, 103, 3, 1, 'Strong Willed', 1, 1, 'Male', 'Available', null);
+
+INSERT INTO Animals VALUES('Mr. Darcy', 2, 10, 4, 2, 'Confused Romantic', 0, 1, 'Male', 'Available', null);
+
+INSERT INTO Animals VALUES('PonyBoy', 3, 420, 3, 3, 'Nice', 1,1, 'Male', 'Available', null);
+
+INSERT INTO Animals VALUES('Perry', 6, 1, 20, 4, 'Lost', 1, 0, 'Female', 'Available',null);
+
+INSERT INTO Animals VALUES('Mufasa', 5, 169, 6, 5, 'Boastfull', 0,0, 'Male', 'Available',null);
