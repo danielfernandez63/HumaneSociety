@@ -43,7 +43,7 @@ namespace HumaneSociety
 
 
 
-        static void RunEmployeeQueries(Employee employee, string message)
+        public static void RunEmployeeQueries(Employee employee, string message)
         {
             employeeQueryCRUD runEmployeeCrudDelegate;
 
@@ -241,6 +241,16 @@ namespace HumaneSociety
                               select animal).First();
             return animalByID;
         }
+
+        public static List<Animal> GetAnimal()
+        {
+            var animalList = (from animal in context.Animals
+                              where animal.AnimalId >= 0
+                              select animal).ToList();
+            return animalList;
+
+        }
+
         public static IQueryable<Adoption> GetUserAdoptionStatus(Client client)
         {
             var adoptionStatus = from status in context.Adoptions
