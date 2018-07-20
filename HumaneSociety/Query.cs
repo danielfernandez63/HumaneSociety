@@ -345,16 +345,17 @@ namespace HumaneSociety
         public static void UpdateRoom(Animal animal, int newRoomNumber)
         {          
             var roomResult = (from room in context.Rooms
-                                where room.AnimalId == animal.AnimalId
+                                where room.RoomNumbers == newRoomNumber
                                 select room).First();
             if (roomResult.RoomNumbers == null)
             {
-                roomResult.RoomNumbers = newRoomNumber;
+                roomResult.AnimalId = animal.AnimalId;
                 context.SubmitChanges();
             }
             else
             {
                 roomResult.RoomNumbers = roomResult.RoomNumbers;
+                Console.WriteLine("Room is already occupied!");
             }
         }
 

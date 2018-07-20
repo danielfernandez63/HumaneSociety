@@ -66,7 +66,7 @@ namespace HumaneSociety
                     RunUserMenus();
                     return;
                 case "5":
-                    //update room
+                    
                     return;
                 default:
                     UserInterface.DisplayUserOptions("Input not accepted please try again");
