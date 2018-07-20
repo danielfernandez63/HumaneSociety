@@ -44,7 +44,7 @@ namespace HumaneSociety
         }
         protected override void RunUserMenus()
         {
-            List<string> options = new List<string>() { "1. Search for animals", "2. Update info", "3. Apply for Adoption", "4. Check Adoption Status" };
+            List<string> options = new List<string>() { "1. Search for animals", "2. Search for animals by multiple traits ", "3. Update info ", "4. Apply for Adoption ", "5. Check Adoption Status " };
             Console.Clear();
             CheckIfAccountComplete();
             UserInterface.DisplayUserOptions(options);
@@ -61,17 +61,22 @@ namespace HumaneSociety
                     RunUserMenus();
                     return;
                 case 2:
-                    UpdateClientInfo();
+                    RunSearchMultipleTraits();
                     RunUserMenus();
                     return;
                 case 3:
-                    ApplyForAdoption();
+                    UpdateClientInfo();
                     RunUserMenus();
                     return;
                 case 4:
+                    ApplyForAdoption();
+                    RunUserMenus();
+                    return;
+                case 5:
                     CheckAdoptionStatus();
                     RunUserMenus();
                     return;
+
                 default:
                     UserInterface.DisplayUserOptions("Input not accepted please try again");
                     return;
@@ -126,9 +131,51 @@ namespace HumaneSociety
             else if(animals.Count == 0)
             {
                 UserInterface.DisplayUserOptions("No animals found please try another search");
+                RunUserMenus();
             }
             else
             {
+                UserInterface.DisplayAnimalInfo(animals[0]);
+            }
+            UserInterface.DisplayUserOptions("Press enter to continue");
+            Console.ReadLine();
+        }
+
+        private void RunSearchMultipleTraits(List<Animal> animals = null) 
+        {
+            Console.Clear();
+            
+            if(animals == null)
+            {
+                 animals = Query.GetAnimal();               
+            }
+
+            animals = SearchForAnimals().ToList();
+
+            if (animals.Count > 1)
+            {
+                UserInterface.DisplayUserOptions("Several animals found");
+                UserInterface.DisplayAnimals(animals);
+                UserInterface.DisplayUserOptions("Search by more traits to narrow it down? Or start over? Yes continues search.  'yes' or 'no' ");
+                string input = UserInterface.GetUserInput();
+                if (input == "yes")
+                {
+                    RunSearchMultipleTraits(animals);
+                }
+                else
+                {
+                    RunUserMenus();
+                }
+
+            }
+            else if (animals.Count == 0)
+            {
+                UserInterface.DisplayUserOptions("No animals found please try another search");
+                RunUserMenus();
+            }
+            else
+            {
+                UserInterface.DisplayUserOptions("One result was found!");
                 UserInterface.DisplayAnimalInfo(animals[0]);
             }
             UserInterface.DisplayUserOptions("Press enter to continue");
