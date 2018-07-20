@@ -66,7 +66,8 @@ namespace HumaneSociety
                     RunUserMenus();
                     return;
                 case "5":
-                    
+                    UpdateRoom();
+                    RunUserMenus();
                     return;
                 default:
                     UserInterface.DisplayUserOptions("Input not accepted please try again");
@@ -74,7 +75,18 @@ namespace HumaneSociety
                     return;
             }
         }
+        private void UpdateRoom()
+        {
+            Console.WriteLine("What is the ID of the animal changing rooms?");
+            int animalID = int.Parse(Console.ReadLine());
+            Console.WriteLine("What is the room number the animal is moving to?");
+            int newRoomNumber = int.Parse(Console.ReadLine());
+            var animal = (from a in Query.context.Animals
+                          where a.AnimalId == animalID
+                          select a).First();
+            Query.UpdateRoom(animal, newRoomNumber);
 
+        }
 
         private void CheckAdoptions()
         {
