@@ -62,14 +62,8 @@ namespace HumaneSociety
         {
             Employee employee = new Employee();
 
-            employee.EmployeeNumber = int.Parse(UserInterface.GetStringData("employee number", "the employee's"));
+            employee.EmployeeId = int.Parse(UserInterface.GetStringData("employee ID", "the employee's"));
 
-
-            employee.EmployeeId = int.Parse(UserInterface.GetStringData("employee Id of who you want to alter.", "the employee's"));
-            employee.FirstName = UserInterface.GetStringData("first name you would like to alter to?", "the employee's");
-            employee.LastName = UserInterface.GetStringData("last name you would like to alter to?", "the employee's");
-            employee.EmployeeNumber = int.Parse(UserInterface.GetStringData("employee number you would like to alter to?", "the employee's"));
-            employee.Email = UserInterface.GetStringData("employee email you would like to alter to?", "the employee's");
 
             try
             {
