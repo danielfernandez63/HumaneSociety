@@ -16,6 +16,7 @@ namespace HumaneSociety
 
         public static void RunEmployeeQueryUpdate(Employee employee)
         {
+
             Employee employeeToBeUpdated = (from n in context.Employees where n.EmployeeNumber == employee.EmployeeNumber select n).First();
             Console.WriteLine($"What would you like to update? 1. Employee First Name 2. Employee Last Name 3. Employee User Name 4. Employee Password 5. Employee Number 6. Employee Email");
             string userInput = Console.ReadLine();
@@ -45,6 +46,43 @@ namespace HumaneSociety
                     RunEmployeeQueryUpdate(employee);
                     break;
             }
+
+
+            var name = (from n in context.Employees where n.EmployeeId == employee.EmployeeId select n).First();
+
+            name.FirstName = employee.FirstName;
+            name.LastName = employee.LastName;
+            name.Email = employee.Email;
+            name.EmployeeId = employee.EmployeeId;
+
+            //Employee employeeToBeUpdated = (from n in context.Employees where n.EmployeeNumber == employee.EmployeeNumber select n).First();
+            //Console.WriteLine($"What would you like to update? 1. Employee First Name 2. Employee Last Name 3. Employee User Name 4. Employee Password 5. Employee Number 6. Employee Email");
+            //string userInput = Console.ReadLine();
+            //switch (userInput)
+            //{
+            //    case "1":
+            //        UpdateEmployeeFirstName(employeeToBeUpdated);
+            //        break;
+            //    case "2":
+            //        UpdateEmployeeLastName(employeeToBeUpdated);
+            //        break;
+            //    case "3":
+            //        UpdateEmployeeUserName(employeeToBeUpdated);
+            //        break;
+            //    case "4":
+            //        UpdateEmployeePassword(employeeToBeUpdated);
+            //        break;
+            //    case "5":
+            //        UpdateEmployeeEmployeeNumber(employeeToBeUpdated);
+            //        break;
+            //    case "6":
+            //        UpdateEmployeeEmail(employeeToBeUpdated);
+            //        break;
+            //    default:
+            //        RunEmployeeQueryUpdate(employee);
+            //        break;
+           // }
+
             context.SubmitChanges();
         }
         public static void RunEmployeeQueryRead(Employee employee)
@@ -55,7 +93,7 @@ namespace HumaneSociety
         }
         public static void RunEmployeeQueryDelete(Employee employee)
         {
-            var name = (from n in context.Employees where n.EmployeeNumber == employee.EmployeeNumber select n).First();
+            var name = (from n in context.Employees where n.EmployeeNumber == employee.EmployeeNumber && n.LastName == employee.LastName select n).First();
             context.Employees.DeleteOnSubmit(name);
             context.SubmitChanges();
         }
@@ -141,7 +179,7 @@ namespace HumaneSociety
             Console.WriteLine($"Employee's email has been changed to {employee.Email}.");
             Console.ReadLine();
         }
-        public static void ImportCSVDataToDatabase(string[][] csvOutputData) // CSV Data to New Record
+        public static void ImportCSVDataToDatabase(string[][] csvOutputData) 
         {
             for (int i = 0; i < csvOutputData.Count(); i++)
             {
