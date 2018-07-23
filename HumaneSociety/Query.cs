@@ -16,12 +16,42 @@ namespace HumaneSociety
 
         public static void RunEmployeeQueryUpdate(Employee employee)
         {
+
             var name = (from n in context.Employees where n.EmployeeId == employee.EmployeeId select n).First();
 
             name.FirstName = employee.FirstName;
             name.LastName = employee.LastName;
             name.Email = employee.Email;
             name.EmployeeId = employee.EmployeeId;
+
+            //Employee employeeToBeUpdated = (from n in context.Employees where n.EmployeeNumber == employee.EmployeeNumber select n).First();
+            //Console.WriteLine($"What would you like to update? 1. Employee First Name 2. Employee Last Name 3. Employee User Name 4. Employee Password 5. Employee Number 6. Employee Email");
+            //string userInput = Console.ReadLine();
+            //switch (userInput)
+            //{
+            //    case "1":
+            //        UpdateEmployeeFirstName(employeeToBeUpdated);
+            //        break;
+            //    case "2":
+            //        UpdateEmployeeLastName(employeeToBeUpdated);
+            //        break;
+            //    case "3":
+            //        UpdateEmployeeUserName(employeeToBeUpdated);
+            //        break;
+            //    case "4":
+            //        UpdateEmployeePassword(employeeToBeUpdated);
+            //        break;
+            //    case "5":
+            //        UpdateEmployeeEmployeeNumber(employeeToBeUpdated);
+            //        break;
+            //    case "6":
+            //        UpdateEmployeeEmail(employeeToBeUpdated);
+            //        break;
+            //    default:
+            //        RunEmployeeQueryUpdate(employee);
+            //        break;
+           // }
+
             context.SubmitChanges();
         }
         public static void RunEmployeeQueryRead(Employee employee)
@@ -70,7 +100,55 @@ namespace HumaneSociety
 
             }
         }
-        public static void ImportCSVDataToDatabase(string[][] csvOutputData) // CSV Data to New Record
+        public static void UpdateEmployeeFirstName(Employee employee)
+        {
+            Console.WriteLine("Update first name: ");
+            string newFirstName = Console.ReadLine();
+            employee.FirstName = newFirstName;
+            Console.WriteLine($"Employee's first name has been changed to {employee.FirstName}.");
+            Console.ReadLine();
+        }
+        public static void UpdateEmployeeLastName(Employee employee)
+        {
+            Console.WriteLine("Update Last name: ");
+            string newLastName = Console.ReadLine();
+            employee.LastName = newLastName;
+            Console.WriteLine($"Employee's last name has been changed to {employee.LastName}.");
+            Console.ReadLine();
+        }
+        public static void UpdateEmployeeUserName(Employee employee)
+        {
+            Console.WriteLine("Update Username: ");
+            string newUserName = Console.ReadLine();
+            employee.UserName = newUserName;
+            Console.WriteLine($"Employee's Username has been changed to {employee.UserName}.");
+            Console.ReadLine();
+        }
+        public static void UpdateEmployeePassword(Employee employee)
+        {
+            Console.WriteLine("Update Password: ");
+            string newPassword = Console.ReadLine();
+            employee.Password = newPassword;
+            Console.WriteLine($"Employee's password has been changed to {employee.Password}.");
+            Console.ReadLine();
+        }
+        public static void UpdateEmployeeEmployeeNumber(Employee employee)
+        {
+            Console.WriteLine("Update Employee Number: ");
+            string newEmployeeNumber = Console.ReadLine();
+            employee.EmployeeNumber = int.Parse(newEmployeeNumber);
+            Console.WriteLine($"Employee's Employee Number has been changed to {employee.EmployeeNumber}.");
+            Console.ReadLine();
+        }
+        public static void UpdateEmployeeEmail(Employee employee)
+        {
+            Console.WriteLine("Update email: ");
+            string newEmail = Console.ReadLine();
+            employee.Email = newEmail;
+            Console.WriteLine($"Employee's email has been changed to {employee.Email}.");
+            Console.ReadLine();
+        }
+        public static void ImportCSVDataToDatabase(string[][] csvOutputData) 
         {
             for (int i = 0; i < csvOutputData.Count(); i++)
             {
