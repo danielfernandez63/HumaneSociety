@@ -61,10 +61,11 @@ namespace HumaneSociety
         private void UpdateEmployee()
         {
             Employee employee = new Employee();
-            employee.FirstName = UserInterface.GetStringData("first name", "the employee's");
-            employee.LastName = UserInterface.GetStringData("last name", "the employee's");
-            employee.EmployeeId = int.Parse(UserInterface.GetStringData("employee number", "the employee's"));
-            employee.Email = UserInterface.GetStringData("email", "the employee's");
+            employee.EmployeeId = int.Parse(UserInterface.GetStringData("employee Id of who you want to alter.", "the employee's"));
+            employee.FirstName = UserInterface.GetStringData("first name you would like to alter to?", "the employee's");
+            employee.LastName = UserInterface.GetStringData("last name you would like to alter to?", "the employee's");
+            employee.EmployeeNumber = int.Parse(UserInterface.GetStringData("employee number you would like to alter to?", "the employee's"));
+            employee.Email = UserInterface.GetStringData("employee email you would like to alter to?", "the employee's");
             try
             {
                 Query.RunEmployeeQueries(employee, "update");
@@ -83,7 +84,7 @@ namespace HumaneSociety
             try
             {
                 Employee employee = new Employee();
-                employee.EmployeeNumber = int.Parse(UserInterface.GetStringData("employee number", "the employee's"));
+                employee.EmployeeNumber = int.Parse(UserInterface.GetStringData("employee number of the person you are searching for", "the employee's"));
                 Query.RunEmployeeQueries(employee, "read");
             }
             catch
@@ -96,8 +97,8 @@ namespace HumaneSociety
         private void RemoveEmployee()
         {
             Employee employee = new Employee();
-            employee.LastName = UserInterface.GetStringData("last name", "the employee's");
-            employee.EmployeeNumber = int.Parse(UserInterface.GetStringData("employee number", "the employee's"));
+            employee.LastName = UserInterface.GetStringData("last name of person you want to remove", "the employee's");
+            employee.EmployeeNumber = int.Parse(UserInterface.GetStringData("employee number of person you want to remove", "the employee's"));
             try
             {
                 Console.Clear();
@@ -114,10 +115,10 @@ namespace HumaneSociety
         private void AddEmployee()
         {
             Employee employee = new Employee();
-            employee.FirstName = UserInterface.GetStringData("first name", "the employee's");
-            employee.LastName = UserInterface.GetStringData("last name", "the employee's");
-            employee.EmployeeNumber = int.Parse(UserInterface.GetStringData("employee number", "the employee's"));
-            employee.Email = UserInterface.GetStringData("email", "the employee's"); 
+            employee.FirstName = UserInterface.GetStringData("first name you want to add", "the employee's");
+            employee.LastName = UserInterface.GetStringData("last name you want to add", "the employee's");
+            employee.EmployeeNumber = int.Parse(UserInterface.GetStringData("employee number you want to add", "the employee's"));
+            employee.Email = UserInterface.GetStringData("email you want to add", "the employee's"); 
             
             try
             {

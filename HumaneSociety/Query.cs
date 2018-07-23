@@ -16,13 +16,8 @@ namespace HumaneSociety
 
         public static void RunEmployeeQueryUpdate(Employee employee)
         {
-            Employee name = (from n in context.Employees where n.EmployeeId == employee.EmployeeId select n).First();
-            //Console.WriteLine("Update first name: ");
-            //Console.ReadLine();
-            //string bob = "bobby";
-            //name.FirstName = bob;
-            //Console.WriteLine(name.FirstName);
-            //Console.ReadLine();
+            var name = (from n in context.Employees where n.EmployeeId == employee.EmployeeId select n).First();
+
             name.FirstName = employee.FirstName;
             name.LastName = employee.LastName;
             name.Email = employee.Email;
@@ -37,7 +32,7 @@ namespace HumaneSociety
         }
         public static void RunEmployeeQueryDelete(Employee employee)
         {
-            var name = (from n in context.Employees where n.EmployeeNumber == employee.EmployeeNumber select n).First();
+            var name = (from n in context.Employees where n.EmployeeNumber == employee.EmployeeNumber && n.LastName == employee.LastName select n).First();
             context.Employees.DeleteOnSubmit(name);
             context.SubmitChanges();
         }
