@@ -235,6 +235,7 @@ namespace HumaneSociety
             if (animals.Count == 0)
             {
                 UserInterface.DisplayUserOptions("Animal not found please use different search criteria");
+                Console.ReadLine();
                 return;
             }
             RunCheckMenu(animals[0]);

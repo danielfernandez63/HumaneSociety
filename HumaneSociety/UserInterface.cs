@@ -135,6 +135,7 @@ namespace HumaneSociety
             DisplayUserOptions(info);
             Console.ReadLine();
         }
+
         private static string BoolToYesNo(bool? input)
         {
             if (input == true)

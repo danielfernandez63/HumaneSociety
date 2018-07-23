@@ -40,6 +40,8 @@ namespace HumaneSociety
                     UpdateEmployeeEmail(employeeToBeUpdated);
                     break;
                 default:
+                    Console.WriteLine("Please enter a valid command of 1-6.");
+                    Console.ReadLine();
                     RunEmployeeQueryUpdate(employee);
                     break;
             }
@@ -216,28 +218,26 @@ namespace HumaneSociety
             try
             {
                 Animal name = (from n in context.Animals where n.AnimalId == animal.AnimalId select n).First();
-                context.Animals.DeleteOnSubmit(animal);
+                context.Animals.DeleteOnSubmit(name);
                 context.SubmitChanges();
-
             }
             catch
             {
-
+                return;
             }
         }
 
         public static void AddAnimal(Animal animal)
         {
             try
-            {       
-                
-               
+            {                         
                 context.Animals.InsertOnSubmit(animal);
-                context.SubmitChanges();             
+                context.SubmitChanges();
+                AssignRoom(animal);
             }
             catch
             {
-               
+                return;
             }
 
         }
@@ -267,7 +267,7 @@ namespace HumaneSociety
             }
             catch
             {
-
+                return;
             }
         }
 
@@ -275,26 +275,23 @@ namespace HumaneSociety
         {         
                 Client newclient = new Client();
                 Address newaddress = new Address();
-                {
-                    newclient.FirstName = firstName;
-                    newclient.LastName = lastName;
-                    newclient.UserName = username;
-                    newclient.Password = password;
-                    newclient.Email = email;
-                    newaddress.AddressLine1 = streetAddress;
-                    newaddress.Zipcode = zipCode;
-                    newaddress.USStateId = state;
-                    newclient.AddressId = newaddress.AddressId;        
-                }
-
             try
             {
+                newclient.FirstName = firstName;
+                newclient.LastName = lastName;
+                newclient.UserName = username;
+                newclient.Password = password;
+                newclient.Email = email;
+                newaddress.AddressLine1 = streetAddress;
+                newaddress.Zipcode = zipCode;
+                newaddress.USStateId = state;
+                newclient.Address = newaddress;
                 context.Clients.InsertOnSubmit(newclient);
                 context.SubmitChanges();
             }
             catch
             {
-
+                return;
             }
 
         }
@@ -419,10 +416,31 @@ namespace HumaneSociety
 
         public static Room GetRoom(int animalID)
         {
-            var roomResult = (from room in context.Rooms
-                              where room.AnimalId == animalID
-                              select room).First();
-            return roomResult;
+            try
+            {
+                var roomResult = (from room in context.Rooms
+                                  where room.Animal.AnimalId == animalID
+                                  select room).First();
+                return roomResult;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        public static void AssignRoom(Animal animal)
+        {
+            Room newRoom = new Room();
+            newRoom.AnimalId = animal.AnimalId;
+            int newNumber = 0;
+            bool searching = false;
+            while (searching)
+            {
+                newNumber++;
+                newRoom.RoomNumbers = newNumber;
+            }
+            context.Rooms.InsertOnSubmit(newRoom);
+            context.SubmitChanges();
         }
         public static void UpdateRoom(Animal animal, int newRoomNumber)
         {          
@@ -457,7 +475,7 @@ namespace HumaneSociety
             }
             catch
             {
-
+                return;
             }
         }
 
@@ -471,7 +489,7 @@ namespace HumaneSociety
             }
             catch
             {
-
+                return;
             }
         }
 
@@ -485,7 +503,7 @@ namespace HumaneSociety
             }
             catch
             {
-
+                return;
             }
         }
 
@@ -499,7 +517,7 @@ namespace HumaneSociety
             }
             catch
             {
-
+                return;
             }
         }
 
@@ -513,7 +531,7 @@ namespace HumaneSociety
             }
             catch
             {
-
+                return;
             }
         }
         public static void UpdateEmail(Client client)
@@ -526,7 +544,7 @@ namespace HumaneSociety
             }
             catch
             {
-
+                return;
             }
         }
         public static void UpdateAddress(Client client)
@@ -539,7 +557,7 @@ namespace HumaneSociety
             }
             catch
             {
-
+                return;
             }
         }
         public static void UpdateFirstName(Client client)
@@ -552,7 +570,7 @@ namespace HumaneSociety
             }
             catch
             {
-
+                return;
             }
 
         }
@@ -566,7 +584,7 @@ namespace HumaneSociety
             }
             catch
             {
-
+                return;
             }
 
         }

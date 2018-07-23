@@ -127,15 +127,18 @@ namespace HumaneSociety
             {
                 UserInterface.DisplayUserOptions("Several animals found");
                 UserInterface.DisplayAnimals(animals);
+                Console.ReadLine();
             }
             else if(animals.Count == 0)
             {
                 UserInterface.DisplayUserOptions("No animals found please try another search");
+                Console.ReadLine();
                 RunUserMenus();
             }
             else
             {
                 UserInterface.DisplayAnimalInfo(animals[0]);
+                Console.ReadLine();
             }
             UserInterface.DisplayUserOptions("Press enter to continue");
             Console.ReadLine();
@@ -248,7 +251,7 @@ namespace HumaneSociety
         }
         private static int GetState()
         {
-            UserInterface.DisplayUserOptions("Please enter your state (abbreviation or full state name");
+            UserInterface.DisplayUserOptions("Please enter your state (abbreviation or full state name)");
             string state = UserInterface.GetUserInput();
             var states = Query.GetStates();
             var stateNames = from territory in states select territory.Name.ToLower();
