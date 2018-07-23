@@ -61,9 +61,9 @@ namespace HumaneSociety
         private void UpdateEmployee()
         {
             Employee employee = new Employee();
-<<<<<<< HEAD
+
             employee.EmployeeNumber = int.Parse(UserInterface.GetStringData("employee number", "the employee's"));
-=======
+
 
             employee.EmployeeId = int.Parse(UserInterface.GetStringData("employee Id of who you want to alter.", "the employee's"));
             employee.FirstName = UserInterface.GetStringData("first name you would like to alter to?", "the employee's");
@@ -71,7 +71,6 @@ namespace HumaneSociety
             employee.EmployeeNumber = int.Parse(UserInterface.GetStringData("employee number you would like to alter to?", "the employee's"));
             employee.Email = UserInterface.GetStringData("employee email you would like to alter to?", "the employee's");
 
->>>>>>> b7426a6f369f347cbe540ac12af4e0910bbb3289
             try
             {
                 Query.RunEmployeeQueries(employee, "update");
